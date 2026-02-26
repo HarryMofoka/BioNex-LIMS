@@ -2,16 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '@iconify/react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isHome = location.pathname === '/';
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
     const scrollToTop = () => {
+        if (!isHome) {
+            navigate('/');
+            return;
+        }
         const scrollContainer = document.getElementById('main-scroll-container');
         if (scrollContainer) {
             scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
@@ -20,6 +29,10 @@ const Header = () => {
     };
 
     const scrollToSection = (id) => {
+        if (!isHome) {
+            navigate('/');
+            return;
+        }
         const scrollContainer = document.getElementById('main-scroll-container');
         const element = document.getElementById(id);
         if (scrollContainer && element) {
@@ -32,19 +45,27 @@ const Header = () => {
         <div className="sticky top-0 z-50 px-6 sm:px-12 lg:px-16 pt-12 pb-4 bg-gradient-to-b from-[#020205]/80 to-transparent backdrop-blur-sm">
             <div className="flex justify-between items-center border-b border-white/5 pb-8 relative">
                 {/* Brand */}
-                <div className="flex items-center gap-3">
+                <Link to="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 cursor-pointer">
                     <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                         <Icon icon="solar:test-tube-linear" className="text-black text-2xl" />
                     </div>
                     <span className="text-2xl text-white font-normal tracking-tight">NexusLIMS</span>
-                </div>
+                </Link>
 
                 {/* Desktop Navigation Tabs */}
                 <nav className="hidden md:flex items-center gap-1 bg-white/5 p-1.5 rounded-full border border-white/10 backdrop-blur-md shadow-lg">
-                    <button onClick={scrollToTop} className="px-6 py-2 rounded-full text-white text-sm font-normal bg-white/10 shadow-inner hover:bg-white/20 transition-all">Platform</button>
-                    <button onClick={() => scrollToSection('features')} className="px-6 py-2 rounded-full text-white/60 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Modules</button>
-                    <button onClick={() => scrollToSection('pricing')} className="px-6 py-2 rounded-full text-white/60 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Plans</button>
-                    <button onClick={() => scrollToSection('docs')} className="px-6 py-2 rounded-full text-white/60 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Compliance</button>
+                    {isHome ? (
+                        <>
+                            <button onClick={scrollToTop} className="px-6 py-2 rounded-full text-white text-sm font-normal bg-white/10 shadow-inner hover:bg-white/20 transition-all">Platform</button>
+                            <button onClick={() => scrollToSection('features')} className="px-6 py-2 rounded-full text-white/60 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Modules</button>
+                            <button onClick={() => scrollToSection('pricing')} className="px-6 py-2 rounded-full text-white/60 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Plans</button>
+                            <button onClick={() => scrollToSection('docs')} className="px-6 py-2 rounded-full text-white/60 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Compliance</button>
+                        </>
+                    ) : (
+                        <button onClick={() => navigate('/')} className="px-6 py-2 rounded-full text-white text-sm font-normal bg-white/10 shadow-inner hover:bg-white/20 transition-all flex items-center gap-2">
+                            <Icon icon="solar:arrow-left-linear" /> Back to Platform
+                        </button>
+                    )}
                 </nav>
 
                 {/* Header Actions */}
@@ -87,26 +108,36 @@ const Header = () => {
                             </button>
 
                             <div className="flex flex-col items-center gap-4 w-[85%] max-w-sm">
-                                <motion.button
-                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-                                    onClick={scrollToTop} className="w-full text-center px-6 py-4 rounded-2xl text-white text-xl font-normal bg-white/5 hover:bg-white/10 transition-all border border-white/10 glass-card">
-                                    Platform
-                                </motion.button>
-                                <motion.button
-                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                                    onClick={() => scrollToSection('features')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
-                                    Modules
-                                </motion.button>
-                                <motion.button
-                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-                                    onClick={() => scrollToSection('pricing')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
-                                    Plans
-                                </motion.button>
-                                <motion.button
-                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                                    onClick={() => scrollToSection('docs')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
-                                    Compliance
-                                </motion.button>
+                                {isHome ? (
+                                    <>
+                                        <motion.button
+                                            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+                                            onClick={scrollToTop} className="w-full text-center px-6 py-4 rounded-2xl text-white text-xl font-normal bg-white/5 hover:bg-white/10 transition-all border border-white/10 glass-card">
+                                            Platform
+                                        </motion.button>
+                                        <motion.button
+                                            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                                            onClick={() => scrollToSection('features')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
+                                            Modules
+                                        </motion.button>
+                                        <motion.button
+                                            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                                            onClick={() => scrollToSection('pricing')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
+                                            Plans
+                                        </motion.button>
+                                        <motion.button
+                                            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                                            onClick={() => scrollToSection('docs')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
+                                            Compliance
+                                        </motion.button>
+                                    </>
+                                ) : (
+                                    <motion.button
+                                        initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+                                        onClick={() => { navigate('/'); setIsMenuOpen(false); }} className="w-full text-center px-6 py-4 rounded-2xl text-white text-xl font-normal bg-white/5 hover:bg-white/10 transition-all border border-white/10 glass-card flex justify-center items-center gap-2">
+                                        <Icon icon="solar:arrow-left-linear" /> Back to Platform
+                                    </motion.button>
+                                )}
 
                                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} className="h-px w-full bg-white/10 my-4"></motion.div>
 

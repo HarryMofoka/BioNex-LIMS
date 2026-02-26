@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import { Link } from 'react-router-dom';
 
 const DocsSection = () => {
     return (
@@ -66,13 +67,13 @@ const DocsSection = () => {
             {/* Footer */}
             <div className="mt-24 border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center text-white/30 text-xs font-mono">
                 <div className="flex items-center gap-6 mb-4 md:mb-0">
-                    <a href="#" className="hover:text-white transition-colors">SUPPORT</a>
-                    <a href="#" className="hover:text-white transition-colors">POPIA PORTAL</a>
+                    <Link to="/support" className="hover:text-white transition-colors">SUPPORT</Link>
+                    <Link to="/popia" className="hover:text-white transition-colors">POPIA PORTAL</Link>
                     <a href="#" className="hover:text-white transition-colors">LINKEDIN</a>
                 </div>
                 <div className="flex items-center gap-4">
-                    <a href="#" className="hover:text-white transition-colors">TERMS</a>
-                    <a href="#" className="hover:text-white transition-colors">PRIVACY POLICY (ZA)</a>
+                    <Link to="/terms" className="hover:text-white transition-colors">TERMS</Link>
+                    <Link to="/privacy" className="hover:text-white transition-colors">PRIVACY POLICY (ZA)</Link>
                     <span>BIONEX © 2026</span>
                 </div>
             </div>

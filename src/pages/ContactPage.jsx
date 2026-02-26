@@ -116,12 +116,12 @@ const ContactPage = () => {
 
             {/* Footer */}
             <div className="px-6 md:px-0 mt-24 border-t border-white/5 py-8 flex flex-col md:flex-row justify-between items-center text-white/30 text-xs font-mono w-full max-w-5xl mx-auto">
-                <div className="flex items-center gap-6 mb-4 md:mb-0">
+                <div className="flex flex-wrap justify-center items-center gap-4 md:gap-6 mb-4 md:mb-0">
                     <Link to="/support" className="hover:text-white transition-colors">SUPPORT</Link>
                     <Link to="/popia" className="hover:text-white transition-colors">POPIA PORTAL</Link>
                     <a href="#" className="hover:text-white transition-colors">LINKEDIN</a>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap justify-center items-center gap-4">
                     <Link to="/terms" className="hover:text-white transition-colors">TERMS</Link>
                     <Link to="/privacy" className="hover:text-white transition-colors">PRIVACY POLICY (ZA)</Link>
                     <span>BIONEX © 2026</span>

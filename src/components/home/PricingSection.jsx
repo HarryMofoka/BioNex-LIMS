@@ -53,7 +53,7 @@ const PricingSection = () => {
                     <div className="flex-grow space-y-4 mb-8">
                         <div className="flex items-start text-sm text-white/90 font-thin"><span className="check-icon bg-teal-500/20 text-teal-300"><Icon icon="solar:check-read-linear" /></span>Up to 20 User Seats</div>
                         <div className="flex items-start text-sm text-white/90 font-thin"><span className="check-icon bg-teal-500/20 text-teal-300"><Icon icon="solar:check-read-linear" /></span>Unlimited Inventory & Storage</div>
-                        <div className="flex items-start text-sm text-white/90 font-thin"><span className="check-icon bg-teal-500/20 text-teal-300"><Icon icon="solar:check-read-linear" /></span>Audit Trails (21 CFR Part 11 Ready)</div>
+                        <div className="flex items-start text-sm text-white/90 font-thin"><span className="check-icon bg-teal-500/20 text-teal-300"><Icon icon="solar:check-read-linear" /></span>POPIA & 21 CFR Part 11 Audit Trails</div>
                         <div className="flex items-start text-sm text-white/90 font-thin"><span className="check-icon bg-teal-500/20 text-teal-300"><Icon icon="solar:check-read-linear" /></span>Equipment Maintenance Scheduling</div>
                         <div className="flex items-start text-sm text-white/90 font-thin"><span className="check-icon bg-teal-500/20 text-teal-300"><Icon icon="solar:check-read-linear" /></span>Priority Support & API Access</div>
                     </div>

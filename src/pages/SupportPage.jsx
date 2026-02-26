@@ -1,11 +1,13 @@
 import React from 'react';
 import Header from '../components/layout/Header';
+import SEO from '../components/SEO';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 
 const SupportPage = () => {
     return (
         <div className="min-h-screen bg-[#020205] text-white selection:bg-teal-500/30 font-sans relative flex flex-col">
+            <SEO title="Support Center" description="BioNex LIMS technical support, documentation, and API guides." />
             <Header />
             <div className="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 relative z-10 w-full max-w-4xl mx-auto pt-32 pb-24 text-center">
                 <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-500/10 blur-[100px] rounded-full point-events-none -z-10"></div>

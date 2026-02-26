@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../components/layout/Header';
+import SEO from '../components/SEO';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +9,7 @@ const ContactPage = () => {
 
     return (
         <div className="min-h-screen bg-[#020205] text-white selection:bg-teal-500/30 font-sans relative flex flex-col">
+            <SEO title="Contact Sales" description="Get in touch with BioNex LIMS or schedule a live demo of the platform." />
             <Header />
             <div className="flex-grow flex flex-col items-center justify-center p-6 sm:p-12 relative z-10 w-full max-w-5xl mx-auto pt-32 pb-24">
                 <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500/10 blur-[100px] rounded-full point-events-none -z-10"></div>

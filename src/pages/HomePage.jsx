@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Header from '../components/layout/Header';
+import SEO from '../components/SEO';
 import HeroSection from '../components/home/HeroSection';
 import FeaturesSection from '../components/home/FeaturesSection';
 import PricingSection from '../components/home/PricingSection';
@@ -46,6 +47,7 @@ const HomePage = () => {
                 <div id="main-scroll-container" className="glass-panel w-full h-full rounded-[3rem] relative overflow-y-auto no-scrollbar scroll-smooth">
                     <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none z-0"></div>
 
+                    <SEO />
                     <Header />
 
                     <HeroSection />

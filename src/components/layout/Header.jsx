@@ -75,9 +75,9 @@ const Header = () => {
                         <span className="text-sm text-white font-mono">1.2k Labs</span>
                     </div>
                     <div className="w-px h-6 bg-white/10 hidden lg:block"></div>
-                    <button className="hidden md:flex text-white/60 hover:text-white transition-colors items-center justify-center">
-                        <Icon icon="solar:user-circle-linear" className="text-[28px]" />
-                    </button>
+                    <Link to="/contact" className="hidden md:flex bg-teal-600/90 hover:bg-teal-500 text-white px-5 py-2 rounded-full text-sm font-normal transition-all shadow-lg shadow-teal-500/20 items-center gap-2">
+                        Contact Sales <Icon icon="solar:arrow-right-linear" />
+                    </Link>
 
                     {/* Mobile Hamburger Button */}
                     <button
@@ -146,9 +146,9 @@ const Header = () => {
                                         <Icon icon="solar:buildings-linear" className="text-teal-400 text-xl" />
                                         <span className="text-lg text-white font-mono">1.2k Labs</span>
                                     </div>
-                                    <button className="text-white hover:text-teal-400 transition-colors flex items-center justify-center p-3 rounded-full border border-transparent hover:border-white/10 glass-card hover:bg-white/5">
-                                        <Icon icon="solar:user-circle-linear" className="text-[32px]" />
-                                    </button>
+                                    <Link to="/contact" onClick={() => setIsMenuOpen(false)} className="bg-teal-600/90 hover:bg-teal-500 text-white px-5 py-3 rounded-full text-sm font-normal transition-all shadow-lg shadow-teal-500/20 flex items-center gap-2">
+                                        Contact <Icon icon="solar:arrow-right-linear" />
+                                    </Link>
                                 </motion.div>
                             </div>
                         </motion.div>

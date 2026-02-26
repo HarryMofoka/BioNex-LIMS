@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import { Link } from 'react-router-dom';
 
 const PricingSection = () => {
     return (
@@ -38,7 +39,7 @@ const PricingSection = () => {
 
                     <p className="text-xs text-white/40 mb-6 italic border-t border-white/10 pt-4 font-thin">Fits easily into standard departmental discretionary funds—minimal procurement friction.</p>
 
-                    <button className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-normal transition-colors">Start Free Trial</button>
+                    <Link to="/contact" className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-normal transition-colors text-center block">Contact Sales</Link>
                 </div>
 
                 {/* Tier 2: Core Research */}
@@ -60,7 +61,7 @@ const PricingSection = () => {
 
                     <p className="text-xs text-white/40 mb-6 italic border-t border-teal-500/20 pt-4 font-thin">Easily written into standard multi-year NRF/MRC grant proposals under "Software & Consumables."</p>
 
-                    <button className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-sm font-normal transition-colors shadow-lg shadow-teal-500/25">Upgrade to Core</button>
+                    <Link to="/contact" className="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-sm font-normal transition-colors shadow-lg shadow-teal-500/25 text-center block">Contact Sales</Link>
                 </div>
 
                 {/* Tier 3: Institution */}
@@ -81,7 +82,7 @@ const PricingSection = () => {
 
                     <p className="text-xs text-white/40 mb-6 italic border-t border-white/10 pt-4 font-thin">Consolidate fragmented faculty budgets into a single, scalable IT contract with centralized governance.</p>
 
-                    <button className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-normal transition-colors">Contact Sales</button>
+                    <Link to="/contact" className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-normal transition-colors text-center block">Contact Sales</Link>
                 </div>
             </div>
         </div>

@@ -35,7 +35,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <div className="text-sm text-white/50 font-mono mb-1">SALES & PARTNERSHIPS</div>
-                                        <a href="mailto:sales@bionex.co.za" className="text-white hover:text-teal-400 transition-colors">sales@bionex.co.za</a>
+                                        <a href="mailto:nexlinksolutionsza@gmail.com" className="text-white hover:text-teal-400 transition-colors">nexlinksolutionsza@gmail.com</a>
                                     </div>
                                 </div>
 
@@ -45,7 +45,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <div className="text-sm text-white/50 font-mono mb-1">GENERAL ENQUIRIES</div>
-                                        <a href="tel:+27210000000" className="text-white hover:text-teal-400 transition-colors">+27 (0)21 000 0000</a>
+                                        <a href="tel:+27685642464" className="text-white hover:text-teal-400 transition-colors">+27 68 564 2464</a>
                                     </div>
                                 </div>
 
@@ -55,7 +55,7 @@ const ContactPage = () => {
                                     </div>
                                     <div>
                                         <div className="text-sm text-white/50 font-mono mb-1">HEADQUARTERS (SOUTH AFRICA)</div>
-                                        <span className="text-white">Century City, Cape Town<br /> Western Cape, 7441</span>
+                                        <span className="text-white">16 Beefwood Street, S.E 3<br /> Vanderbijylpark</span>
                                     </div>
                                 </div>
                             </div>
@@ -77,17 +77,17 @@ const ContactPage = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label className="block text-xs font-mono text-white/50 mb-2 uppercase">Your Name</label>
-                                            <input required type="text" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-teal-500/50 outline-none transition-colors" placeholder="John Doe" />
+                                            <input required type="text" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-teal-500/50 outline-none transition-colors" placeholder="Pieter van der Merwe" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-mono text-white/50 mb-2 uppercase">Work Email</label>
-                                            <input required type="email" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-teal-500/50 outline-none transition-colors" placeholder="john@university.ac.za" />
+                                            <input required type="email" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-teal-500/50 outline-none transition-colors" placeholder="pieter@vandermerwelabs.co.za" />
                                         </div>
                                     </div>
 
                                     <div>
                                         <label className="block text-xs font-mono text-white/50 mb-2 uppercase">Organization / University</label>
-                                        <input required type="text" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-teal-500/50 outline-none transition-colors" placeholder="e.g. UCT Clinical Research Unit" />
+                                        <input required type="text" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:border-teal-500/50 outline-none transition-colors" placeholder="e.g. Van der Merwe Clinical Diagnostics" />
                                     </div>
 
                                     <div>
@@ -114,8 +114,18 @@ const ContactPage = () => {
                 </div>
             </div>
 
-            <div className="border-t border-white/5 py-8 text-center text-white/30 text-xs font-mono">
-                BIONEX © 2026
+            {/* Footer */}
+            <div className="px-6 md:px-0 mt-24 border-t border-white/5 py-8 flex flex-col md:flex-row justify-between items-center text-white/30 text-xs font-mono w-full max-w-5xl mx-auto">
+                <div className="flex items-center gap-6 mb-4 md:mb-0">
+                    <Link to="/support" className="hover:text-white transition-colors">SUPPORT</Link>
+                    <Link to="/popia" className="hover:text-white transition-colors">POPIA PORTAL</Link>
+                    <a href="#" className="hover:text-white transition-colors">LINKEDIN</a>
+                </div>
+                <div className="flex items-center gap-4">
+                    <Link to="/terms" className="hover:text-white transition-colors">TERMS</Link>
+                    <Link to="/privacy" className="hover:text-white transition-colors">PRIVACY POLICY (ZA)</Link>
+                    <span>BIONEX © 2026</span>
+                </div>
             </div>
         </div>
     );

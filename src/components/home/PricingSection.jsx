@@ -27,7 +27,7 @@ const PricingSection = () => {
                         <div className="text-lg text-white font-normal mb-2">Starter Lab</div>
                         <div className="text-sm text-white/50 font-thin">For single PIs, start-ups, and small research groups.</div>
                     </div>
-                    <div className="text-4xl text-white font-normal tracking-tight mb-8"><span className="text-2xl text-white/50 mr-1">R</span>899<span className="text-lg text-white/40 font-thin">/mo</span></div>
+                    <div className="text-4xl text-white font-normal tracking-tight mb-8"><span className="text-2xl text-white/50 mr-1">R</span>1,499<span className="text-lg text-white/40 font-thin">/mo</span></div>
 
                     <div className="flex-grow space-y-4 mb-8">
                         <div className="flex items-start text-sm text-white/70 font-thin"><span className="check-icon"><Icon icon="solar:check-read-linear" /></span>Up to 5 User Seats (PI + Students)</div>
@@ -36,7 +36,7 @@ const PricingSection = () => {
                         <div className="flex items-start text-sm text-white/70 font-thin"><span className="check-icon"><Icon icon="solar:check-read-linear" /></span>Standard Email Support (48h SLA)</div>
                     </div>
 
-                    <p className="text-xs text-white/40 mb-6 italic border-t border-white/10 pt-4 font-thin">Fits easily under standard R1,000 threshold for discretionary faculty credit cards—no complex procurement required.</p>
+                    <p className="text-xs text-white/40 mb-6 italic border-t border-white/10 pt-4 font-thin">Fits easily into standard departmental discretionary funds—minimal procurement friction.</p>
 
                     <button className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm font-normal transition-colors">Start Free Trial</button>
                 </div>
@@ -48,7 +48,7 @@ const PricingSection = () => {
                         <div className="text-lg text-white font-normal mb-2">Core Research</div>
                         <div className="text-sm text-white/50 font-thin">For established clinical labs and large academic groups.</div>
                     </div>
-                    <div className="text-4xl text-white font-normal tracking-tight mb-8"><span className="text-2xl text-white/50 mr-1">R</span>2,899<span className="text-lg text-white/40 font-thin">/mo</span></div>
+                    <div className="text-4xl text-white font-normal tracking-tight mb-8"><span className="text-2xl text-white/50 mr-1">R</span>8,999<span className="text-lg text-white/40 font-thin">/mo</span></div>
 
                     <div className="flex-grow space-y-4 mb-8">
                         <div className="flex items-start text-sm text-white/90 font-thin"><span className="check-icon bg-teal-500/20 text-teal-300"><Icon icon="solar:check-read-linear" /></span>Up to 20 User Seats</div>
@@ -69,7 +69,7 @@ const PricingSection = () => {
                         <div className="text-lg text-white font-normal mb-2">Institution</div>
                         <div className="text-sm text-white/50 font-thin">For department-wide or multi-campus deployments.</div>
                     </div>
-                    <div className="text-4xl text-white font-normal tracking-tight mb-8"><span className="text-2xl text-white/50 mr-1">R</span>14,999<span className="text-lg text-white/40 font-thin">/mo</span></div>
+                    <div className="text-4xl text-white font-normal tracking-tight mb-8"><span className="text-2xl text-white/50 mr-1">R</span>39,999<span className="text-lg text-white/40 font-thin">/mo</span></div>
 
                     <div className="flex-grow space-y-4 mb-8">
                         <div className="flex items-start text-sm text-white/70 font-thin"><span className="check-icon"><Icon icon="solar:check-read-linear" /></span>Unlimited Users & Labs</div>

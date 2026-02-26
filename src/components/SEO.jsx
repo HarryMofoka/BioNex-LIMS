@@ -1,7 +1,21 @@
+/**
+ * Programmable SEO Component for injecting document head meta tags dynamically.
+ * 
+ * Lessons & Explanations:
+ * - `react-helmet-async`: The standard `react-helmet` library is outdated. The async version is thread-safe and acts precisely as a portal to `<head>`.
+ * - **Dynamic SEO**: Since React applications execute strictly via JS within a `<div id="root">`, native search crawlers need `<head>` modifications immediately to understand context.
+ * - **Open Graph (`og:`)**: These tags guarantee that links shared on Facebook, LinkedIn, iMessage, Slack, etc., render rich previews correctly (image, title, description).
+ * - **Twitter (`twitter:`)**: Specific formatting enforced by Twitter/X to ensure large image cards render successfully.
+ * 
+ * @param {string} title - Optional page title. Automatically affixes root branding.
+ * @param {string} description - Optional page description. Defaults to BioNex overview.
+ * @param {string} url - Optional current page URL for canonical accuracy.
+ */
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SEO = ({ title, description, url = 'https://bionex.co.za' }) => {
+    // Fallbacks ensuring metadata is never null
     const defaultTitle = "BioNex LIMS | The Intelligent Inventory Platform";
     const defaultDescription = "BioNex LIMS provides automated inventory tracking, POPIA & 21 CFR Part 11 compliant audit trails, and secure data residency for modern laboratories.";
 

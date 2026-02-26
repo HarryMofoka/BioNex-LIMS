@@ -1,3 +1,10 @@
+/**
+ * South African POPIA (Protection of Personal Information Act) Compliance Portal.
+ * 
+ * Lessons & Explanations:
+ * - **Regional Legal Compliance**: The forms specifically use terminology aligned with South African law (e.g., "Right to be Forgotten", "Information Officer"), showcasing how frontend copy must adapt to backend legal realities.
+ * - **State Re-use**: Similar to the ContactPage, standard React `useState` controls the success/submission view instantly without route changes.
+ */
 import React, { useState } from 'react';
 import Header from '../components/layout/Header';
 import SEO from '../components/SEO';

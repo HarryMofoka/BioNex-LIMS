@@ -1,3 +1,10 @@
+/**
+ * Features Section rendering the core capabilities of the LIMS platform.
+ * 
+ * Lessons & Explanations:
+ * - **Data-Driven Rendering**: Instead of hard-coding 6 separate div blocks, we store the content in a JavaScript array (`features`) and map over it. This adheres to the DRY (Don't Repeat Yourself) principle and makes content updates trivial.
+ * - **Dynamic Tailwind Classes**: By injecting the `feature.color` via template literals (`bg-${feature.color}-500/10`), we rapidly theme individual cards without writing custom CSS classes for each flavor.
+ */
 import React from 'react';
 import { Icon } from '@iconify/react';
 
@@ -51,6 +58,10 @@ const FeaturesSection = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* 
+                  Map over the features array to dynamically construct cards.
+                  The `key={idx}` prop is required by React to track list items efficiently during DOM diffing.
+                */}
                 {features.map((feature, idx) => (
                     <div key={idx} className="feature-card visible bg-white/[0.02] border border-white/5 rounded-3xl p-8 hover:bg-white/[0.05] transition-all duration-300 group">
                         <div className={`w-12 h-12 bg-${feature.color}-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>

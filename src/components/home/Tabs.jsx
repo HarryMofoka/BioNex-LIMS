@@ -1,3 +1,11 @@
+/**
+ * Interactive Tab Component rendering internal Data Views (Track, Audit, Dashboard).
+ * 
+ * Lessons & Explanations:
+ * - **Lazy State Initialization**: Instead of running `localStorage.getItem` every render, we pass an initial function to `useState(() => {...})`. This ensures the expensive JSON payload is only parsed once when the component officially mounts.
+ * - **Derived State vs Explicit State**: Searching/Filtering does not need its own `useState` array. Instead, we keep one `searchQuery` string and dynamically filter the primary `inventory` array during each render.
+ * - **CSS Group Selectors**: Notice the frequent use of `group` and `group-hover` in Tailwind classes. This enables a parent container's hover state to dynamically change styles of inner children (like showing a hidden delete button when hovering over a row).
+ */
 import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 
@@ -13,14 +21,17 @@ const defaultInventory = [
 ];
 
 const Tabs = ({ activeTab }) => {
-    // State management for inventory array
+    /**
+     * State management for the inventory array.
+     * Uses a lazy-initialized callback to safely retrieve data from LocalStorage to persist user modifications.
+     */
     const [inventory, setInventory] = useState(() => {
         const saved = localStorage.getItem('nexus_inventory');
         if (saved) {
             try {
-                return JSON.parse(saved);
+                return JSON.parse(saved); // Hydrate local state from strings
             } catch (e) {
-                return defaultInventory;
+                return defaultInventory; // Fallback to safe defaults if corruption exists
             }
         }
         return defaultInventory;
@@ -28,17 +39,28 @@ const Tabs = ({ activeTab }) => {
 
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Save to localStorage when inventory changes
+    /**
+     * Core Hook securely mapping our memory states directly into browser storage indefinitely.
+     * Whenever `inventory` is updated, this effect fires automatically.
+     */
     useEffect(() => {
         localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
     }, [inventory]);
 
+    /**
+     * Deletes a record from the inventory list safely.
+     * @param {Object} e - Synthetic Event from React
+     * @param {string} id - Inventory ID to remove
+     */
     const handleDelete = (e, id) => {
-        e.stopPropagation(); // prevent row click
+        e.stopPropagation(); // Prevents clicks bubbling up to parent overlapping elements
         setInventory(prev => prev.filter(item => item.id !== id));
     };
 
-    // Derived State
+    /**
+     * Derived State Pipeline
+     * Avoid storing derived data in useState loops. We dynamically compute the output array relying solely on memory speed.
+     */
     const filteredInventory = inventory.filter(item =>
         item.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.name.toLowerCase().includes(searchQuery.toLowerCase())

@@ -1,3 +1,9 @@
+/**
+ * Privacy Policy Document Page.
+ * 
+ * Lessons & Explanations:
+ * - **Tailwind Typography (`prose`)**: We utilize `@tailwindcss/typography` classes (`prose`, `prose-invert`, `prose-teal`) to automatically apply beautiful typographical defaults (line-height, margin, font-sizing) to raw HTML blocks like `<section>` and `<ul>`, vastly reducing boilerplate CSS.
+ */
 import React from 'react';
 import Header from '../components/layout/Header';
 import SEO from '../components/SEO';

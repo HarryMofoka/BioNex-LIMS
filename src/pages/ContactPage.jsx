@@ -1,3 +1,10 @@
+/**
+ * Contact & Sales Inquiry Page.
+ * 
+ * Lessons & Explanations:
+ * - **Form State Handling**: Uses a simple boolean `submitted` state to entirely swap out the form UI with a success message, maintaining the user context without a page reload.
+ * - **Responsive Forms**: Utilizes `grid-cols-1 md:grid-cols-2` to stack inputs vertically on mobile phones, but place them side-by-side on larger screens to save vertical space.
+ */
 import React, { useState } from 'react';
 import Header from '../components/layout/Header';
 import SEO from '../components/SEO';

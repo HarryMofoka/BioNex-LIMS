@@ -1,3 +1,10 @@
+/**
+ * Pricing Section displaying subscription tiers.
+ * 
+ * Lessons & Explanations:
+ * - **Grid Layout**: Uses `grid-cols-1 lg:grid-cols-3` to confidently stack cards on mobile while spreading them across three columns on desktop.
+ * - **Z-Index Traps**: The "Core Research" highlight tier utilizes `transform scale-105 z-10` to physically lift the card above the others, supported by an intense `shadow-teal-500` glow to capture user attention.
+ */
 import React from 'react';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';

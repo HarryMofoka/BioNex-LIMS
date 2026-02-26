@@ -1,3 +1,9 @@
+/**
+ * Terms of Service Document Page.
+ * 
+ * Lessons & Explanations:
+ * - **Consistent Typography (`prose`)**: Like the Privacy Policy, we use `prose-invert` for dark mode compatibility and `prose-indigo` to inject brand-specific accent colors into native HTML anchor links automatically.
+ */
 import React from 'react';
 import Header from '../components/layout/Header';
 import SEO from '../components/SEO';

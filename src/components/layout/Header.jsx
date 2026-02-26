@@ -1,3 +1,11 @@
+/**
+ * Global application Header providing navigation and mobile menu logic.
+ * 
+ * Lessons & Explanations:
+ * - `createPortal`: Used to physically render the mobile menu overlay directly into `document.body`. This solves notorious CSS `z-index` and `overflow: hidden` mapping issues present in complex DOM trees.
+ * - `framer-motion`: Utilized via `motion.div` and `AnimatePresence`. `AnimatePresence` enables exit animations when a component is unmounted from the DOM (e.g., closing the mobile menu).
+ * - `useLocation`: A React Router hook to determine if the user is currently on the root path `/` or a subpage (like `/terms`), changing the navigation layout dynamically.
+ */
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '@iconify/react';
@@ -5,17 +13,28 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 const Header = () => {
+    // State to toggle the full-screen mobile menu overlay
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // Tracks if the component has mounted client-side. Important for `createPortal` to avoid SSR hydration mismatches.
     const [mounted, setMounted] = useState(false);
 
+    // React Router hooks for programmatic navigation
     const location = useLocation();
     const navigate = useNavigate();
+
+    // Boolean flag to tailor the UI whether on the landing page or a sub-page
     const isHome = location.pathname === '/';
 
+    // Ensure document.body is available before allowing portal rendering
     useEffect(() => {
         setMounted(true);
     }, []);
 
+    /**
+     * Helper to scroll gracefully to the top of the main container.
+     * If not on the homepage, navigates back home first.
+     */
     const scrollToTop = () => {
         if (!isHome) {
             navigate('/');
@@ -25,9 +44,13 @@ const Header = () => {
         if (scrollContainer) {
             scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        setIsMenuOpen(false);
+        setIsMenuOpen(false); // Close mobile menu if open
     };
 
+    /**
+     * Helper to scroll to a specific ID section on the homepage.
+     * @param {string} id - The DOM element ID to scroll to (e.g., 'features', 'pricing').
+     */
     const scrollToSection = (id) => {
         if (!isHome) {
             navigate('/');
@@ -38,7 +61,7 @@ const Header = () => {
         if (scrollContainer && element) {
             scrollContainer.scrollTo({ top: element.offsetTop, behavior: 'smooth' });
         }
-        setIsMenuOpen(false);
+        setIsMenuOpen(false); // Close mobile menu if open
     };
 
     return (
@@ -90,9 +113,11 @@ const Header = () => {
             </div>
 
             {/* Mobile Menu Full Screen Overlay via Portal */}
+            {/* createPortal attaches this DOM node to the <body> safely circumventing local CSS overflows. */}
             {mounted && createPortal(
                 <AnimatePresence>
                     {isMenuOpen && (
+                        /* Framer Motion declarative animation properties */
                         <motion.div
                             initial={{ opacity: 0, y: -20, backdropFilter: 'blur(0px)' }}
                             animate={{ opacity: 1, y: 0, backdropFilter: 'blur(20px)' }}

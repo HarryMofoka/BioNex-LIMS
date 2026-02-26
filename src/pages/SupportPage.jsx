@@ -1,3 +1,10 @@
+/**
+ * Customer Support & Documentation Portal.
+ * 
+ * Lessons & Explanations:
+ * - **Visual Hierarchy**: This page utilizes a massive top padding (`pt-32`) and a constrained max-width (`max-w-4xl`) to deliberately force the user's focal point strictly onto the two support columns without distraction.
+ * - **Subtle Theming**: Instead of using the primary Teal brand color everywhere, Indigo is introduced to separate the 'Support' context visually from the primary 'Sales' context.
+ */
 import React from 'react';
 import Header from '../components/layout/Header';
 import SEO from '../components/SEO';

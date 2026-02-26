@@ -1,3 +1,10 @@
+/**
+ * Primary Landing Page assembling all sub-components.
+ * 
+ * Lessons & Explanations:
+ * - **Intersection Observer API**: A performant native browser API used here to trigger CSS animations when elements scroll into view. It is significantly faster than binding events to `window.onscroll`.
+ * - **Visual Compositing**: The background is constructed using multiple overlapping `fixed` divs (blobs, noise SVG, CSS gradients) creating a complex visual depth without heavy image assets.
+ */
 import React, { useEffect } from 'react';
 import Header from '../components/layout/Header';
 import SEO from '../components/SEO';
@@ -7,7 +14,11 @@ import PricingSection from '../components/home/PricingSection';
 import DocsSection from '../components/home/DocsSection';
 
 const HomePage = () => {
-    // Intersection Observer for scroll animations
+    /**
+     * Component Lifecycle Hook 
+     * Registers an IntersectionObserver once the page loads to watch all elements with the `.feature-card` class.
+     * When they enter 10% (threshold: 0.1) into the viewport, the `.visible` class is appended, triggering CSS transitions.
+     */
     useEffect(() => {
         const scrollContainer = document.getElementById('main-scroll-container');
         if (!scrollContainer) return;
@@ -15,7 +26,7 @@ const HomePage = () => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    entry.target.classList.add('visible'); // Triggers CSS opacity/transform
                 }
             });
         }, {
@@ -26,6 +37,7 @@ const HomePage = () => {
         const elements = document.querySelectorAll('.feature-card');
         elements.forEach((el) => observer.observe(el));
 
+        // Cleanup function prevents memory leaks when navigating away from the component
         return () => {
             elements.forEach((el) => observer.unobserve(el));
             observer.disconnect();
@@ -34,7 +46,7 @@ const HomePage = () => {
 
     return (
         <div className="h-screen w-full flex items-center justify-center overflow-hidden relative selection:bg-teal-500/30 text-white font-light">
-            {/* Background Blobs and Noise */}
+            {/* Background Compositing: Blobs and Noise Layers */}
             <div className="blob blob-1"></div>
             <div className="blob blob-2"></div>
             <div className="blob blob-3"></div>

@@ -1,14 +1,27 @@
+/**
+ * HeroSection Component capturing the top fold of the landing page.
+ * 
+ * Lessons & Explanations:
+ * - **State mapped to CSS**: The `activeTab` state natively toggles thick glowing borders or muted opacity classes dynamically utilizing ES6 Template Literals.
+ * - **Responsive Design**: Uses Tailwind prefixes like `sm:text-5xl lg:text-7xl` to effortlessly scale the huge headline down for small devices.
+ * - **Component Composition**: Integrates complex logic by rendering `<Tabs activeTab={activeTab} />` as a child, allowing the parent (Hero) to retain control over the UI state while the child does heavy DOM lifting.
+ */
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
 import Tabs from './Tabs';
 
 const HeroSection = () => {
+    // Tracks which data preview widget is visible (Track, Audit, or Dash)
     const [activeTab, setActiveTab] = useState('trace');
 
+    /**
+     * Programmatic scrolling to direct users downward to the modules when clicking "Scroll".
+     */
     const scrollToFeatures = () => {
         const scrollContainer = document.getElementById('main-scroll-container');
         const element = document.getElementById('features');
         if (scrollContainer && element) {
+            // Native DOM behavior smooth scrolls without needing heavy external libraries
             scrollContainer.scrollTo({ top: element.offsetTop, behavior: 'smooth' });
         }
     };
@@ -36,7 +49,9 @@ const HeroSection = () => {
 
             {/* Central Content */}
             <div className="flex flex-col lg:flex-row flex-grow items-start lg:items-center gap-8 lg:gap-12 z-10 my-12">
-                {/* Tab Controls */}
+                {/* Tab Controls: Responsive button array. 
+                    Notice the template literal `className={\`...\`}` conditionally appending .active styling based on state. 
+                */}
                 <div className="flex lg:flex-col gap-2 sm:gap-4 flex-wrap justify-center w-full lg:w-auto">
                     <button
                         className={`font-mono text-[10px] sm:text-xs tracking-widest transition-all duration-400 cubic-bezier w-[72px] h-[72px] sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-2xl sm:rounded-[1.5rem] flex flex-col gap-1 sm:gap-2 items-center justify-center group shrink-0 ${activeTab === 'trace' ? 'active text-white bg-white/15 border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.15)]' : 'text-white/40 hover:text-white bg-white/3 border-white/5 hover:bg-white/10 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_10px_30px_-5px_rgba(0,0,0,0.5)]'

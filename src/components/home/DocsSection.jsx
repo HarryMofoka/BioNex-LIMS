@@ -1,3 +1,10 @@
+/**
+ * Compliance Documentation and Footer Section.
+ * 
+ * Lessons & Explanations:
+ * - **Interactive Placeholders**: The search bar utilizes `focus-within:border-indigo-500/50` which triggers a border change on the *parent div* whenever the *child input* is clicked, keeping aesthetics clean.
+ * - **Staggered Animations**: Cards employ `transitionDelay` styles (e.g., `50ms`, `100ms`) forcing them to load sequentially in a cascading wave rather than appearing instantly altogether, providing an organic feel.
+ */
 import React from 'react';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';

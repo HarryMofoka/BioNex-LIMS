@@ -30,7 +30,7 @@ const Tabs = ({ activeTab }) => {
         if (saved) {
             try {
                 return JSON.parse(saved); // Hydrate local state from strings
-            } catch (e) {
+            } catch {
                 return defaultInventory; // Fallback to safe defaults if corruption exists
             }
         }
@@ -249,7 +249,7 @@ const Tabs = ({ activeTab }) => {
                                         {filteredInventory.length === 0 ? (
                                             <div className="p-8 text-center text-white/40">No items found matching your search.</div>
                                         ) : (
-                                            filteredInventory.map((item, i) => (
+                                            filteredInventory.map((item) => (
                                                 <div key={item.id} className={`dash-row group grid grid-cols-12 gap-4 px-4 py-3 border-b border-white/5 items-center cursor-pointer relative ${item.strike ? 'opacity-60' : ''}`}>
                                                     <div className="col-span-1"><input type="checkbox" className="custom-checkbox" /></div>
                                                     <div className="col-span-2 font-mono text-xs text-white/60">{item.id}</div>

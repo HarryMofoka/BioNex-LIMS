@@ -6,9 +6,10 @@
  * - `framer-motion`: Utilized via `motion.div` and `AnimatePresence`. `AnimatePresence` enables exit animations when a component is unmounted from the DOM (e.g., closing the mobile menu).
  * - `useLocation`: A React Router hook to determine if the user is currently on the root path `/` or a subpage (like `/terms`), changing the navigation layout dynamically.
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Icon } from '@iconify/react';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 
@@ -16,20 +17,12 @@ const Header = () => {
     // State to toggle the full-screen mobile menu overlay
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Tracks if the component has mounted client-side. Important for `createPortal` to avoid SSR hydration mismatches.
-    const [mounted, setMounted] = useState(false);
-
     // React Router hooks for programmatic navigation
     const location = useLocation();
     const navigate = useNavigate();
 
     // Boolean flag to tailor the UI whether on the landing page or a sub-page
     const isHome = location.pathname === '/';
-
-    // Ensure document.body is available before allowing portal rendering
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     /**
      * Helper to scroll gracefully to the top of the main container.
@@ -114,7 +107,7 @@ const Header = () => {
 
             {/* Mobile Menu Full Screen Overlay via Portal */}
             {/* createPortal attaches this DOM node to the <body> safely circumventing local CSS overflows. */}
-            {mounted && createPortal(
+            {createPortal(
                 <AnimatePresence>
                     {isMenuOpen && (
                         /* Framer Motion declarative animation properties */

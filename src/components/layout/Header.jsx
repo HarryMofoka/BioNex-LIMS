@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Icon } from '@iconify/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const scrollToTop = () => {
         const scrollContainer = document.getElementById('main-scroll-container');
@@ -53,35 +60,71 @@ const Header = () => {
 
                     {/* Mobile Hamburger Button */}
                     <button
-                        className="md:hidden text-white/60 hover:text-white transition-colors flex items-center justify-center"
+                        className="md:hidden text-white/60 hover:text-white transition-colors flex items-center justify-center relative z-[60]"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         <Icon icon={isMenuOpen ? "solar:close-circle-linear" : "solar:hamburger-menu-linear"} className="text-[28px]" />
                     </button>
                 </div>
-
-                {/* Mobile Menu Dropdown */}
-                {isMenuOpen && (
-                    <div className="absolute top-full left-0 right-0 mt-4 p-4 rounded-2xl glass-card flex flex-col gap-2 md:hidden animate-fadeIn shadow-2xl z-50 border border-white/10 overflow-hidden before:absolute before:inset-0 before:-z-10 before:bg-black/60 before:backdrop-blur-xl">
-                        <button onClick={scrollToTop} className="w-full text-left px-4 py-3 rounded-xl text-white text-sm font-normal bg-white/5 hover:bg-white/10 transition-all">Platform</button>
-                        <button onClick={() => scrollToSection('features')} className="w-full text-left px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Modules</button>
-                        <button onClick={() => scrollToSection('pricing')} className="w-full text-left px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Plans</button>
-                        <button onClick={() => scrollToSection('docs')} className="w-full text-left px-4 py-3 rounded-xl text-white/80 hover:text-white hover:bg-white/5 text-sm font-normal transition-all">Compliance</button>
-
-                        <div className="h-px w-full bg-white/10 my-2"></div>
-
-                        <div className="flex items-center justify-between px-4 py-2">
-                            <div className="flex items-center gap-2">
-                                <Icon icon="solar:buildings-linear" className="text-teal-400 text-base" />
-                                <span className="text-sm text-white font-mono">1.2k Labs</span>
-                            </div>
-                            <button className="text-white hover:text-teal-400 transition-colors flex items-center justify-center">
-                                <Icon icon="solar:user-circle-linear" className="text-[28px]" />
-                            </button>
-                        </div>
-                    </div>
-                )}
             </div>
+
+            {/* Mobile Menu Full Screen Overlay via Portal */}
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -20, backdropFilter: 'blur(0px)' }}
+                            animate={{ opacity: 1, y: 0, backdropFilter: 'blur(20px)' }}
+                            exit={{ opacity: 0, y: -10, backdropFilter: 'blur(0px)' }}
+                            transition={{ duration: 0.3, ease: [0.2, 0.8, 0.2, 1] }}
+                            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/60"
+                        >
+                            <button
+                                className="absolute top-8 right-6 text-white/60 hover:text-white transition-colors flex items-center justify-center p-2"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Icon icon="solar:close-circle-linear" className="text-[36px]" />
+                            </button>
+
+                            <div className="flex flex-col items-center gap-4 w-[85%] max-w-sm">
+                                <motion.button
+                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
+                                    onClick={scrollToTop} className="w-full text-center px-6 py-4 rounded-2xl text-white text-xl font-normal bg-white/5 hover:bg-white/10 transition-all border border-white/10 glass-card">
+                                    Platform
+                                </motion.button>
+                                <motion.button
+                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                                    onClick={() => scrollToSection('features')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
+                                    Modules
+                                </motion.button>
+                                <motion.button
+                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
+                                    onClick={() => scrollToSection('pricing')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
+                                    Plans
+                                </motion.button>
+                                <motion.button
+                                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                                    onClick={() => scrollToSection('docs')} className="w-full text-center px-6 py-4 rounded-2xl text-white/80 hover:text-white hover:bg-white/5 text-xl font-normal transition-all border border-white/10 glass-card">
+                                    Compliance
+                                </motion.button>
+
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }} className="h-px w-full bg-white/10 my-4"></motion.div>
+
+                                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="flex items-center gap-8">
+                                    <div className="flex items-center gap-2 bg-white/5 px-5 py-3 rounded-full border border-white/10 glass-card hover:bg-white/10 transition-colors cursor-pointer">
+                                        <Icon icon="solar:buildings-linear" className="text-teal-400 text-xl" />
+                                        <span className="text-lg text-white font-mono">1.2k Labs</span>
+                                    </div>
+                                    <button className="text-white hover:text-teal-400 transition-colors flex items-center justify-center p-3 rounded-full border border-transparent hover:border-white/10 glass-card hover:bg-white/5">
+                                        <Icon icon="solar:user-circle-linear" className="text-[32px]" />
+                                    </button>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </div>
     );
 };

@@ -1,7 +1,53 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 
+const defaultInventory = [
+    { id: 'RX-8902', name: 'Sodium Chloride 0.9%', loc: 'Rm 402 • Cab B', status: 'In Stock', qty: '15 L', color: 'teal', icon: null },
+    { id: 'AB-1145', name: 'Taq Polymerase', loc: 'Frz -80°C • R2', status: 'Low Stock', qty: '2 U', color: 'amber', icon: 'solar:snowflake-linear' },
+    { id: 'CH-9921', name: 'Methanol, HPLC Grade', loc: 'Flam Cab 1', status: 'In Stock', qty: '4 L', color: 'teal', icon: null },
+    { id: 'RS-0054', name: 'Fetal Bovine Serum', loc: 'Frz -20°C', status: 'Depleted', qty: '0 ml', color: 'rose', icon: null, strike: true },
+    { id: 'DX-1142', name: 'Dimethyl Sulfoxide (DMSO)', loc: 'Chem Rm 2 • C1', status: 'In Stock', qty: '2.5 L', color: 'teal', icon: null },
+    { id: 'PR-3341', name: 'Proteinase K', loc: 'Frz -20°C • Box 4', status: 'Low Stock', qty: '0.5 ml', color: 'amber', icon: 'solar:snowflake-linear' },
+    { id: 'LB-9021', name: 'Luria Broth Base', loc: 'Prep Rm • Shelf 3', status: 'In Stock', qty: '5 kg', color: 'teal', icon: null },
+    { id: 'EX-5542', name: 'Ethidium Bromide', loc: 'Hazmat • Cab 4', status: 'Depleted', qty: '0 ml', color: 'rose', icon: 'solar:danger-triangle-linear', strike: true },
+];
+
 const Tabs = ({ activeTab }) => {
+    // State management for inventory array
+    const [inventory, setInventory] = useState(() => {
+        const saved = localStorage.getItem('nexus_inventory');
+        if (saved) {
+            try {
+                return JSON.parse(saved);
+            } catch (e) {
+                return defaultInventory;
+            }
+        }
+        return defaultInventory;
+    });
+
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Save to localStorage when inventory changes
+    useEffect(() => {
+        localStorage.setItem('nexus_inventory', JSON.stringify(inventory));
+    }, [inventory]);
+
+    const handleDelete = (e, id) => {
+        e.stopPropagation(); // prevent row click
+        setInventory(prev => prev.filter(item => item.id !== id));
+    };
+
+    // Derived State
+    const filteredInventory = inventory.filter(item =>
+        item.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const totalItems = inventory.length;
+    const lowStockCount = inventory.filter(item => item.status === 'Low Stock').length;
+    const depletedCount = inventory.filter(item => item.status === 'Depleted').length;
+
     return (
         <>
             {/* TAB 1: TRACK */}
@@ -93,7 +139,7 @@ const Tabs = ({ activeTab }) => {
                 <div className="tab-content w-full h-full absolute inset-0">
                     <div className="w-full h-full bg-[#0a0a0e]/90 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 lg:p-8 relative overflow-hidden flex flex-col shadow-2xl">
                         {/* Dash Header */}
-                        <div className="flex justify-between items-center mb-6">
+                        <div className="flex justify-between items-center mb-6 z-10 relative">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-white/5 rounded-lg border border-white/10">
                                     <Icon icon="solar:database-linear" className="text-teal-400 text-xl" />
@@ -111,10 +157,30 @@ const Tabs = ({ activeTab }) => {
                                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <Icon icon="solar:magnifer-linear" className="text-white/40" />
                                     </div>
-                                    <input type="text" placeholder="Search ID, Name..." className="bg-black/40 border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-teal-500/50 focus:border-teal-500/50 block w-full pl-9 p-1.5 placeholder-white/30 transition-all outline-none" />
+                                    <input
+                                        type="text"
+                                        placeholder="Search ID, Name..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="bg-black/40 border border-white/10 text-white text-sm rounded-lg focus:ring-1 focus:ring-teal-500/50 focus:border-teal-500/50 block w-full pl-9 p-1.5 placeholder-white/30 transition-all outline-none"
+                                    />
                                 </div>
 
-                                <button className="bg-teal-600/90 hover:bg-teal-500 text-white px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2 shadow-lg shadow-teal-500/20">
+                                <button
+                                    className="bg-teal-600/90 hover:bg-teal-500 text-white px-3 py-1.5 rounded-lg text-sm transition-all flex items-center gap-2 shadow-lg shadow-teal-500/20"
+                                    onClick={() => {
+                                        const newItem = {
+                                            id: `NEW-${Math.floor(Math.random() * 10000)}`,
+                                            name: 'New Custom Reagent',
+                                            loc: 'Rm 101',
+                                            status: 'In Stock',
+                                            qty: '100 ml',
+                                            color: 'teal',
+                                            icon: null
+                                        };
+                                        setInventory([newItem, ...inventory]);
+                                    }}
+                                >
                                     <Icon icon="solar:add-square-linear" /> <span className="hidden sm:inline">Add Item</span>
                                 </button>
                             </div>
@@ -125,21 +191,21 @@ const Tabs = ({ activeTab }) => {
                             <div className="glass-card rounded-xl p-4 flex items-center justify-between">
                                 <div>
                                     <p className="text-xs text-white/50 mb-1">Total Items</p>
-                                    <p className="text-xl font-normal text-white">4,289</p>
+                                    <p className="text-xl font-normal text-white">{totalItems}</p>
                                 </div>
                                 <Icon icon="solar:box-minimalistic-linear" className="text-white/20 text-[28px]" />
                             </div>
                             <div className="glass-card rounded-xl p-4 flex items-center justify-between">
                                 <div>
                                     <p className="text-xs text-white/50 mb-1">Low Stock</p>
-                                    <p className="text-xl font-normal text-amber-400">12</p>
+                                    <p className="text-xl font-normal text-amber-400">{lowStockCount}</p>
                                 </div>
                                 <Icon icon="solar:danger-triangle-linear" className="text-amber-400/20 text-[28px]" />
                             </div>
                             <div className="glass-card rounded-xl p-4 flex items-center justify-between">
                                 <div>
-                                    <p className="text-xs text-white/50 mb-1">Expiring Soon</p>
-                                    <p className="text-xl font-normal text-rose-400">5</p>
+                                    <p className="text-xs text-white/50 mb-1">Depleted</p>
+                                    <p className="text-xl font-normal text-rose-400">{depletedCount}</p>
                                 </div>
                                 <Icon icon="solar:calendar-date-linear" className="text-rose-400/20 text-[28px]" />
                             </div>
@@ -156,27 +222,35 @@ const Tabs = ({ activeTab }) => {
                                 <div className="col-span-1 text-right">Qty</div>
                             </div>
                             <div className="overflow-y-auto no-scrollbar flex-grow text-sm text-white/80 pb-16">
-                                {[
-                                    { id: 'RX-8902', name: 'Sodium Chloride 0.9%', loc: 'Rm 402 • Cab B', status: 'In Stock', qty: '15 L', color: 'teal', icon: null },
-                                    { id: 'AB-1145', name: 'Taq Polymerase', loc: 'Frz -80°C • R2', status: 'Low Stock', qty: '2 U', color: 'amber', icon: 'solar:snowflake-linear' },
-                                    { id: 'CH-9921', name: 'Methanol, HPLC Grade', loc: 'Flam Cab 1', status: 'In Stock', qty: '4 L', color: 'teal', icon: null },
-                                    { id: 'RS-0054', name: 'Fetal Bovine Serum', loc: 'Frz -20°C', status: 'Depleted', qty: '0 ml', color: 'rose', icon: null, strike: true }
-                                ].map((item, i) => (
-                                    <div key={i} className={`dash-row grid grid-cols-12 gap-4 px-4 py-3 border-b border-white/5 items-center cursor-pointer ${item.strike ? 'opacity-60' : ''}`}>
-                                        <div className="col-span-1"><input type="checkbox" className="custom-checkbox" /></div>
-                                        <div className="col-span-2 font-mono text-xs text-white/60">{item.id}</div>
-                                        <div className={`col-span-4 font-normal flex items-center gap-2 ${item.strike ? 'text-white/50 line-through decoration-white/20' : ''}`}>
-                                            {item.name} {item.icon && <Icon icon={item.icon} className="text-blue-300" />}
+                                {filteredInventory.length === 0 ? (
+                                    <div className="p-8 text-center text-white/40">No items found matching your search.</div>
+                                ) : (
+                                    filteredInventory.map((item, i) => (
+                                        <div key={item.id} className={`dash-row group grid grid-cols-12 gap-4 px-4 py-3 border-b border-white/5 items-center cursor-pointer relative ${item.strike ? 'opacity-60' : ''}`}>
+                                            <div className="col-span-1"><input type="checkbox" className="custom-checkbox" /></div>
+                                            <div className="col-span-2 font-mono text-xs text-white/60">{item.id}</div>
+                                            <div className={`col-span-4 font-normal flex items-center gap-2 ${item.strike ? 'text-white/50 line-through decoration-white/20' : ''}`}>
+                                                {item.name} {item.icon && <Icon icon={item.icon} className="text-blue-300" />}
+
+                                                {/* Delete Action (visible on hover) */}
+                                                <button
+                                                    className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity bg-rose-500/20 text-rose-400 hover:bg-rose-500 hover:text-white p-1.5 rounded-md flex items-center justify-center mr-2"
+                                                    onClick={(e) => handleDelete(e, item.id)}
+                                                    title="Delete Record"
+                                                >
+                                                    <Icon icon="solar:trash-bin-trash-linear" />
+                                                </button>
+                                            </div>
+                                            <div className={`col-span-2 text-xs ${item.strike ? 'text-white/40' : ''}`}>{item.loc}</div>
+                                            <div className="col-span-2">
+                                                <span className={`px-2 py-0.5 rounded bg-${item.color}-500/10 border border-${item.color}-500/20 text-${item.color}-400 text-xs`}>
+                                                    {item.status}
+                                                </span>
+                                            </div>
+                                            <div className={`col-span-1 text-right font-mono ${item.strike ? 'text-white/40' : ''}`}>{item.qty}</div>
                                         </div>
-                                        <div className={`col-span-2 text-xs ${item.strike ? 'text-white/40' : ''}`}>{item.loc}</div>
-                                        <div className="col-span-2">
-                                            <span className={`px-2 py-0.5 rounded bg-${item.color}-500/10 border border-${item.color}-500/20 text-${item.color}-400 text-xs`}>
-                                                {item.status}
-                                            </span>
-                                        </div>
-                                        <div className={`col-span-1 text-right font-mono ${item.strike ? 'text-white/40' : ''}`}>{item.qty}</div>
-                                    </div>
-                                ))}
+                                    ))
+                                )}
                             </div>
 
                             <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-[#0a0a0e] to-transparent flex justify-between items-center border-t border-white/5">
@@ -184,7 +258,15 @@ const Tabs = ({ activeTab }) => {
                                     <span className="text-xs text-white/50">Compact View</span>
                                     <input type="checkbox" className="custom-toggle" defaultChecked />
                                 </div>
-                                <span className="text-xs font-mono text-white/30">Last synced: Just now</span>
+                                <button
+                                    className="text-xs font-mono text-rose-400 hover:text-rose-300 transition-colors uppercase tracking-widest border border-rose-500/30 bg-rose-500/10 px-3 py-1 rounded"
+                                    onClick={() => {
+                                        setInventory([]);
+                                        localStorage.removeItem('nexus_inventory');
+                                    }}
+                                >
+                                    Clear All
+                                </button>
                             </div>
                         </div>
 
@@ -197,3 +279,4 @@ const Tabs = ({ activeTab }) => {
 };
 
 export default Tabs;
+

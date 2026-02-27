@@ -65,7 +65,7 @@ const Header = () => {
                     <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                         <Icon icon="solar:test-tube-linear" className="text-black text-2xl" />
                     </div>
-                    <span className="text-2xl text-white font-normal tracking-tight">NexusLIMS</span>
+                    <span className="text-2xl text-white font-normal tracking-tight">BioNex LIMS</span>
                 </Link>
 
                 {/* Desktop Navigation Tabs */}
